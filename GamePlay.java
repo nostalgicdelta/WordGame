@@ -9,27 +9,31 @@ public class GamePlay {
         String firstName;
         String lastName;
         boolean correct = false;
-        int guess;
-        Person player = new Person();
+        boolean keepPlaying = true;
+        String response;
 
         System.out.println("What is your first name?");
         firstName = scanner.nextLine();
         System.out.println("What is your last name?"); 
         lastName = scanner.nextLine();
-        if (lastName == "") {
-            player.createPerson(firstName);
-        }
-        else {
-            player.createPerson(firstName, lastName);
-        }
-
         
-        Numbers number = new Numbers();
-        number.generateNumber();
-        while (!correct) {
-           System.out.println(player.getFirstName() + " " + player.getLastName() + ", guess what number I picked between 0 and 100.");
-            guess = scanner.nextInt();
-            number.compareNumber(guess);
+        Players player = new Players(firstName, lastName);
+        Turn turn = new Turn();
+        Hosts host = new Hosts("Bob", "Barker");
+
+        while(keepPlaying){
+            host.generateNumber();
+            while (!correct) {
+                correct = turn.takeTurn(player, host);
+            } 
+            if (correct) {
+                System.out.println("Play another game? (y or n)");
+                response = scanner.next();
+                if (response.charAt(0) == 'n') {
+                    keepPlaying = false;
+                }
+                correct = false;
+            }           
         }
         scanner.close();
     }

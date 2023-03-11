@@ -1,10 +1,16 @@
 import java.util.Random;
 
-public class Numbers {
+public class Hosts extends Person{
     private static int randomNum;
 
-    
+    public Hosts() {
+        randomNum = 0;
+    }
 
+    public Hosts(String first, String last){
+        firstName = first;
+        lastName = last;
+    }
     public void setRandomNum(int number) {
         randomNum = number;
     }
@@ -35,4 +41,6 @@ public class Numbers {
         }
     return false;
     }
+
+    
 }
