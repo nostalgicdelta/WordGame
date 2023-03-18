@@ -11,20 +11,25 @@ public class GamePlay {
         boolean correct = false;
         boolean keepPlaying = true;
         String response;
+        Players[] currentPlayers = new Players[3];
 
-        System.out.println("What is your first name?");
-        firstName = scanner.nextLine();
-        System.out.println("What is your last name?"); 
-        lastName = scanner.nextLine();
-        
-        Players player = new Players(firstName, lastName);
+        for (int i = 0; i < 3; i++) {
+            System.out.println("What is your first name?");
+            firstName = scanner.nextLine();
+            System.out.println("What is your last name?"); 
+            lastName = scanner.nextLine();
+            currentPlayers[i] = new Players(firstName, lastName);
+        }
+
         Turn turn = new Turn();
         Hosts host = new Hosts("Bob", "Barker");
 
         while(keepPlaying){
             host.generateNumber();
+            int i = 0;
             while (!correct) {
-                correct = turn.takeTurn(player, host);
+                correct = turn.takeTurn(currentPlayers[i], host);
+                i = (i + 1) % currentPlayers.length;
             } 
             if (correct) {
                 System.out.println("Play another game? (y or n)");
