@@ -25,7 +25,7 @@ public class GamePlay {
         Hosts host = new Hosts("Bob", "Barker");
 
         while(keepPlaying){
-            host.generateNumber();
+            host.pickPhrase();
             int i = 0;
             while (!correct) {
                 correct = turn.takeTurn(currentPlayers[i], host);

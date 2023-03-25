@@ -3,6 +3,8 @@ import java.util.Random;
 public class Hosts extends Person{
     private static int randomNum;
 
+    private static String[] gamePhrases = new String[]{"wheel of fortune", "have a nice day", "piece of cake", "bread and butter"};
+
     public Hosts() {
         randomNum = 0;
     }
@@ -22,8 +24,14 @@ public class Hosts extends Person{
     ////
     public void generateNumber() {
         Random rand = new Random();
-        randomNum = rand.nextInt(100);
+        randomNum = rand.nextInt(4);
         setRandomNum(randomNum);
+    }
+
+    public void pickPhrase() {
+        generateNumber();
+        Phrases phrase = new Phrases();
+        phrase.setGamePhrase(gamePhrases[randomNum]);
     }
 
     public boolean compareNumber(int guess) {
