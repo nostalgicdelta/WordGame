@@ -1,6 +1,6 @@
 public class Person {
-    protected String firstName; //Person first name
-    protected String lastName; //Person Last name
+    protected String firstName; 
+    protected String lastName; 
 
     public void setFirstName(String userFirstName) {
         firstName = userFirstName;

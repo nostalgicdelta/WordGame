@@ -1,5 +1,6 @@
-import java.util.Scanner;
+
 import java.util.Random;
+import javax.swing.*;
 
 public class Turn {
     double winAmt;
@@ -10,19 +11,18 @@ public class Turn {
         looseAmt = 100;
     }
     public boolean takeTurn(Players player, Hosts host) {
-        Scanner scanner = new Scanner(System.in);
+        
         String guess;
         boolean correct = false;
         Random rand = new Random();
         int prize;
         Phrases phrase = new Phrases();
 
-        System.out.println("The phrase to guess is: " + phrase.getPlayingPhrase());
-        System.out.println(host.getFirstName() + " " + host.getLastName() + " says " + player.getFirstName() + " " + player.getLastName() + ", guess what Phrase I picked.");
-        guess = scanner.nextLine();
+        
+        guess = JOptionPane.showInputDialog(host.getFirstName() + " " + host.getLastName() + " says " + player.getFirstName() + " " + player.getLastName() + ", guess a letter.");
         while (!guess.matches("[a-zA-Z]")) {
-            System.out.println("Please guess a letter only");
-            guess = scanner.nextLine();
+            JOptionPane.showMessageDialog(null, "Please guess a letter only");
+            guess = JOptionPane.showInputDialog(host.getFirstName() + " " + host.getLastName() + " says " + player.getFirstName() + " " + player.getLastName() + ", guess a letter.");
         }
         try {
             correct = phrase.findLetters(guess);
@@ -44,7 +44,7 @@ public class Turn {
         }
 
         
-        System.out.println(player);
+        JOptionPane.showMessageDialog(null, player);
         return correct;
     }
 }

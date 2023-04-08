@@ -1,4 +1,6 @@
 import java.util.Random;
+import javax.swing.*;
+
 
 public class Physical implements Award{
     String[] prizes = {"Piano", "Car", "Vacation", "Beach House", "Spa Day"};
@@ -10,10 +12,10 @@ public class Physical implements Award{
 
     public int displayWinnings(Players player, boolean correct) {
         if (correct) {
-            System.out.println("Congratulations " + player.getFirstName() + " You Won " + prizes[getRandomPrize()]);
+            JOptionPane.showMessageDialog(null, "Congratulations " + player.getFirstName() + " You Won " + prizes[getRandomPrize()]);
         }
         else {
-            System.out.println("Sorry " + player.getFirstName() + "You could have won" + prizes[getRandomPrize()]);
+            JOptionPane.showMessageDialog(null, "Sorry " + player.getFirstName() + "You could have won" + prizes[getRandomPrize()]);
         }
         return 0;
     }

@@ -25,6 +25,10 @@ public class Players extends Person {
         return playersMoney;
     }
 
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
+
     @Override
     public String toString() {
         return  super.toString() + "\n" + "Money: " + playersMoney;
