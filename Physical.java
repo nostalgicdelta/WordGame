@@ -1,5 +1,4 @@
 import java.util.Random;
-import javax.swing.*;
 
 
 public class Physical implements Award{
@@ -10,12 +9,12 @@ public class Physical implements Award{
         return rand.nextInt(prizes.length);
     }
 
-    public int displayWinnings(Players player, boolean correct) {
+    public int displayWinnings(Players player, boolean correct, GUI gui) {
         if (correct) {
-            JOptionPane.showMessageDialog(null, "Congratulations " + player.getFirstName() + " You Won " + prizes[getRandomPrize()]);
+            gui.showMessage( "Congratulations " + player.getFirstName() + " You Won " + prizes[getRandomPrize()]);
         }
         else {
-            JOptionPane.showMessageDialog(null, "Sorry " + player.getFirstName() + "You could have won" + prizes[getRandomPrize()]);
+            gui.showMessage( "Sorry " + player.getFirstName() + "You could have won" + prizes[getRandomPrize()]);
         }
         return 0;
     }

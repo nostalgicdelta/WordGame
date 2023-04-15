@@ -15,28 +15,52 @@ public class GUI implements ActionListener{
     JLabel host;
     boolean correct = false;
     boolean keepPlaying = true;
-    JButton enterHost = new JButton("Add host");
-    JButton enterPlayers = new JButton("Add Player");
+    
     JButton startGame = new JButton("Start Guessing");
     Phrases phrase = new Phrases();
-    
+    JMenuItem addPlayer = new JMenuItem("Add Player");
+    JMenuItem addHost = new JMenuItem("Add Host");
+    JMenuItem layout = new JMenuItem("Layout");
+    JTextArea messageText = new JTextArea(10,20);
+    JCheckBox saveMessages = new JCheckBox("Save Messages");
+
     public void playGame() {
         
         numPlayers = 0;
         aFrame = new JFrame();
+        JMenuBar mainBar = new JMenuBar();
+        JMenu gameMenu = new JMenu("Game");
+        JMenu about = new JMenu("About");
+        JScrollPane scrollable = new JScrollPane(messageText,
+            ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+            ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        messageText.setEditable(false);
+        
+        about.setMnemonic('A');
+        gameMenu.setMnemonic('g');
+        aFrame.setJMenuBar(mainBar);
+        saveMessages.setToolTipText("If checked all messages will be saved in the text area.");
+        mainBar.add(gameMenu);
+        mainBar.add(about);
+        gameMenu.add(addPlayer);
+        gameMenu.add(addHost);
+        about.add(layout);
+        layout.addActionListener(this);
+        addPlayer.addActionListener(this);
+        addHost.addActionListener(this);
         players = new JLabel("Please input 3 Players");
         host = new JLabel("Please add a Host");
         currentPhrase = new JLabel("Please add a Host and phrase");
-        aFrame.setLayout(new GridLayout());
+        aFrame.setLayout(new GridLayout(2,3, 20, 20));
         
-        enterPlayers.addActionListener(this);
-        enterHost.addActionListener(this);
+        
         startGame.addActionListener(this);
-        aFrame.add(enterPlayers);
         aFrame.add(players);
-        aFrame.add(enterHost);
         aFrame.add(host);
         aFrame.add(currentPhrase);
+        aFrame.add(scrollable);
+        aFrame.add(saveMessages);
+
         aFrame.add(startGame);
         aFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         aFrame.pack();
@@ -44,7 +68,7 @@ public class GUI implements ActionListener{
     }
     
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == enterPlayers) {
+        if (e.getSource() == addPlayer) {
             String name = JOptionPane.showInputDialog("What is your name?");
             String [] firstLast = name.split(" ", 2);
             
@@ -57,7 +81,7 @@ public class GUI implements ActionListener{
             ++numPlayers;
             refreshPlayers();
         }
-        else if (e.getSource() == enterHost) {
+        else if (e.getSource() == addHost) {
             String hostsName = JOptionPane.showInputDialog("What is the host's name?");
             displayHost = hostsName;
             String [] firstLast = hostsName.split(" ", 2);
@@ -72,6 +96,9 @@ public class GUI implements ActionListener{
             currentHost.pickNewPhrase(gamePhrase); 
             refreshCurrentPhrase();  
         }
+        else if(e.getSource() == layout) {
+            JOptionPane.showMessageDialog(aFrame, "I chose a Gridlayout so I can place my 3 JLabels on top to display the names of the host, players, and phrase. \n I can then place the text area, checkbox, and button on the bottom row. \n While this may not be perfect I prefer this layout over others.");
+        }
         else if (e.getSource() == startGame){
             int i = 0;
             Turn turn = new Turn();
@@ -79,19 +106,19 @@ public class GUI implements ActionListener{
 
             for (int j =0; j< currentPlayers.length; j++) {
                 if (currentPlayers[j] == null) {
-                    JOptionPane.showMessageDialog(aFrame, "Please input the Players.");
+                    showMessage("Please input the Players. ");
                     break;
                 }
             }
 
             if (phrase.getPlayingPhrase().indexOf("_") < 0) {
-                JOptionPane.showMessageDialog(aFrame, "Please input a new phrase");
+                messageText.append("Please input a new phrase \n");
             }
             
             else {
                 while (keepPlaying) {
                     while (!correct) {
-                        correct = turn.takeTurn(currentPlayers[i], currentHost);
+                        correct = turn.takeTurn(currentPlayers[i], currentHost, this);
                         i = (i + 1) % currentPlayers.length;
                         refreshCurrentPhrase();
                     } 
@@ -109,6 +136,16 @@ public class GUI implements ActionListener{
             }
 
         }
+    }
+
+    public void clearMessage () {
+        if(!saveMessages.isSelected()) {
+        messageText.setText(null);
+        }
+    }
+
+    public void showMessage(String message) {
+        messageText.append(message + "\n");
     }
 
     public void refreshPlayers() {

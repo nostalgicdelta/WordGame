@@ -1,3 +1,3 @@
 interface Award {
-    int displayWinnings(Players player, boolean correct);
+    int displayWinnings(Players player, boolean correct, GUI gui);
 }

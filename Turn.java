@@ -10,7 +10,7 @@ public class Turn {
         winAmt = 1000;
         looseAmt = 100;
     }
-    public boolean takeTurn(Players player, Hosts host) {
+    public boolean takeTurn(Players player, Hosts host, GUI gui) {
         
         String guess;
         boolean correct = false;
@@ -21,7 +21,7 @@ public class Turn {
         
         guess = JOptionPane.showInputDialog(host.getFirstName() + " " + host.getLastName() + " says " + player.getFirstName() + " " + player.getLastName() + ", guess a letter.");
         while (!guess.matches("[a-zA-Z]")) {
-            JOptionPane.showMessageDialog(null, "Please guess a letter only");
+            gui.showMessage( "Please guess a letter only");
             guess = JOptionPane.showInputDialog(host.getFirstName() + " " + host.getLastName() + " says " + player.getFirstName() + " " + player.getLastName() + ", guess a letter.");
         }
         try {
@@ -32,19 +32,20 @@ public class Turn {
             System.out.println(mle);
         }
         prize = rand.nextInt(1);
-
+        
+        gui.clearMessage();
         if (prize == 0) {
             Money mon = new Money();
-            player.setPlayersMoney(player.getPlayersMoney() + mon.displayWinnings(player, correct));
+            player.setPlayersMoney(player.getPlayersMoney() + mon.displayWinnings(player, correct, gui));
 
         }
         else {
             Physical phys = new Physical();
-            player.setPlayersMoney(player.getPlayersMoney() + phys.displayWinnings(player, correct));
+            player.setPlayersMoney(player.getPlayersMoney() + phys.displayWinnings(player, correct, gui));
         }
-
         
-        JOptionPane.showMessageDialog(null, player);
+        
+        gui.showMessage(player.toString());
         return correct;
     }
 }
