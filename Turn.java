@@ -15,6 +15,7 @@ public class Turn {
         String guess;
         boolean correct = false;
         Random rand = new Random();
+        rand.setSeed(System.currentTimeMillis());
         int prize;
         Phrases phrase = new Phrases();
 
@@ -25,13 +26,13 @@ public class Turn {
             guess = JOptionPane.showInputDialog(host.getFirstName() + " " + host.getLastName() + " says " + player.getFirstName() + " " + player.getLastName() + ", guess a letter.");
         }
         try {
-            correct = phrase.findLetters(guess);
+            correct = phrase.findLetters(guess, gui);
         }
         catch (MultipleLettersException mle)
         {
             System.out.println(mle);
         }
-        prize = rand.nextInt(1);
+        prize = rand.nextInt(2);
         
         gui.clearMessage();
         if (prize == 0) {

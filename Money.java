@@ -6,6 +6,7 @@ public class Money implements Award {
 
     public int displayWinnings(Players player, boolean correct, GUI gui) {
         if (correct) {
+            gui.playCorrectAnswer();
             gui.showMessage( player.getFirstName() + ", That is Correct! You won $" + winAmt);
             return (int)winAmt;
         } 

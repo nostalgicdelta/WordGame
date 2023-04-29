@@ -24,11 +24,14 @@ public class Phrases {
         return playingPhrase;
     }
 
-    public boolean findLetters(String letter) throws MultipleLettersException{
+    public boolean findLetters(String letter, GUI gui) throws MultipleLettersException{
         if (letter.length() > 1) {
             throw (new MultipleLettersException());
         } 
         int index = gamePhrase.indexOf(letter);
+        if (index < 0) {
+            gui.playWrongAnswer();
+        }
         while (index >= 0) {
             playingPhrase = playingPhrase.substring(0,index) + letter + playingPhrase.substring(index+1);
             index = gamePhrase.indexOf(letter, index + 1);
